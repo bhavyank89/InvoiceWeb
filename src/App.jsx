@@ -28,6 +28,10 @@ function App() {
   const [amount, setAmount] = useState("");
   const [price, setPrice] = useState("");
   const [description, setDescription] = useState("");
+  const [personalGST, setPersonalGST] = useState("");
+  const [clientGST, setClientGST] = useState("");
+  const [branchName, setBranchName] = useState("");
+  const [bankIFSC, setBankIFSC] = useState("");
 
   const handleOnPrint = () => {
     window.print();
@@ -50,11 +54,11 @@ function App() {
             {/* Invoice */}
             <Header handleOnPrint={handleOnPrint} handleOnDownload={handleOnDownload} handleOnSend={handleOnSend} />
             <MainDetails name={name} address={address} />
-            <CientDetails clientName={clientName} clientAddress={clientAddress} />
+            <CientDetails clientName={clientName} clientAddress={clientAddress} clientGST={clientGST} />
             <Dates invoiceDate={invoiceDate} dueDate={dueDate} invoiceNumber={invoiceNumber} />
             <Table />
             <Notes notes={notes} />
-            <Footer name={name} address={address} phone={phone} email={email} bankName={bankName} bankAccount={bankAccount} website={website} />
+            <Footer name={name} address={address} phone={phone} email={email} bankName={bankName} bankAccount={bankAccount} website={website} personalGST={personalGST} branchName={branchName} bankIFSC={bankIFSC} />
           </div>
         ) : (
           <div>
@@ -93,6 +97,14 @@ function App() {
               setPrice={setPrice}
               description={description}
               setDescription={setDescription}
+              personalGST={personalGST}
+              setPersonalGST={setPersonalGST}
+              clientGST={clientGST}
+              setClientGST={setClientGST}
+              branchName={branchName}
+              setBranchName={setBranchName}
+              bankIFSC={bankIFSC}
+              setBankIFSC={setBankIFSC}
             />
           </div>
         )}

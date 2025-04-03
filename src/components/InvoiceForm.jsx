@@ -1,6 +1,6 @@
 import TableForm from "./TableForm"
 
-export default function Form({ notes, name, address, clientName, clientAddress, invoiceDate, dueDate, invoiceNumber, phone, email, bankName, bankAccount, website, setName, setAddress, setBankAccount, setBankName, setClientAddress, setClientName, setDueDate, setEmail, setInvoiceDate, setInvoiceNumber, setNotes, setPhone, setWebsite, description, setDescription, amount, setAmount, price, setPrice, quantity, setQuantity }) {
+export default function Form({ notes, name, address, clientName, clientAddress, invoiceDate, dueDate, invoiceNumber, phone, email, bankName, bankAccount, website, setName, setAddress, setBankAccount, setBankName, setClientAddress, setClientName, setDueDate, setEmail, setInvoiceDate, setInvoiceNumber, setNotes, setPhone, setWebsite, description, setDescription, amount, setAmount, price, setPrice, quantity, setQuantity, personalGST, setPersonalGST, clientGST, setClientGST, branchName, setBranchName, bankIFSC, setBankIFSC }) {
   return (
     <>
       {/* Invoice Form */}
@@ -36,8 +36,14 @@ export default function Form({ notes, name, address, clientName, clientAddress, 
             <input className="border border-gray-300 p-2 rounded h-10 mb-2 transition-all duration-100 
              hover:border-blue-500 focus:border-blue-500 focus:ring-2 focus:ring-blue-300 outline-none md:w-auto md:mr-5" type="text" name="phone" id="phone" placeholder="Enter your phone" autoComplete="off" value={phone} onChange={(e) => setPhone(e.target.value)} />
           </div>
-          {/* website */}
+          {/* GST No */}
           <div className="flex flex-col">
+            <label className="font-bold text-sm mx-1 mb-0.5" htmlFor="personalGST">GST No</label>
+            <input className="border border-gray-300 p-2 rounded h-10 mb-2 transition-all duration-100 
+             hover:border-blue-500 focus:border-blue-500 focus:ring-2 focus:ring-blue-300 outline-none md:w-auto" type="text" name="personalGST" id="personalGST" placeholder="Enter your GST" autoComplete="off" value={personalGST} onChange={(e) => setPersonalGST(e.target.value)} />
+          </div>
+          {/* website */}
+          <div className="flex flex-col col-span-2">
             <label className="font-bold text-sm mx-1 mb-0.5" htmlFor="website">Website</label>
             <input className="border border-gray-300 p-2 rounded h-10 mb-2 transition-all duration-100 
              hover:border-blue-500 focus:border-blue-500 focus:ring-2 focus:ring-blue-300 outline-none md:w-auto" type="text" name="website" id="website" placeholder="Enter your website" autoComplete="off" value={website} onChange={(e) => setWebsite(e.target.value)} />
@@ -67,15 +73,15 @@ export default function Form({ notes, name, address, clientName, clientAddress, 
           </div>
           {/* IFSC Code */}
           <div className="flex flex-col">
-            <label className="font-bold text-sm mx-1 mb-0.5" htmlFor="bankName">IFSC Code</label>
+            <label className="font-bold text-sm mx-1 mb-0.5" htmlFor="bankIFSC">IFSC Code</label>
             <input className="border border-gray-300 p-2 rounded h-10 mb-2 transition-all duration-100 
-             hover:border-blue-500 focus:border-blue-500 focus:ring-2 focus:ring-blue-300 outline-none md:w-auto md:mr-5" type="text" name="bankName" id="bankName" placeholder="Enter your bankName" autoComplete="off" value={bankName} onChange={(e) => setBankName(e.target.value)} />
+             hover:border-blue-500 focus:border-blue-500 focus:ring-2 focus:ring-blue-300 outline-none md:w-auto md:mr-5" type="text" name="bankIFSC" id="bankIFSC" placeholder="Enter your IFSC" autoComplete="off" value={bankIFSC} onChange={(e) => setBankIFSC(e.target.value)} />
           </div>
           {/*Branch Name*/}
           <div className="flex flex-col">
-            <label className="font-bold text-sm mx-1 mb-0.5" htmlFor="bankName">Branch Name</label>
+            <label className="font-bold text-sm mx-1 mb-0.5" htmlFor="branchName">Branch Name</label>
             <input className="border border-gray-300 p-2 rounded h-10 mb-2 transition-all duration-100 
-             hover:border-blue-500 focus:border-blue-500 focus:ring-2 focus:ring-blue-300 outline-none md:w-auto" type="text" name="bankName" id="bankName" placeholder="Enter your bankName" autoComplete="off" value={bankName} onChange={(e) => setBankName(e.target.value)} />
+             hover:border-blue-500 focus:border-blue-500 focus:ring-2 focus:ring-blue-300 outline-none md:w-auto" type="text" name="branchName" id="branchName" placeholder="Enter your branchName" autoComplete="off" value={branchName} onChange={(e) => setBranchName(e.target.value)} />
           </div>
         </section>
 
@@ -90,9 +96,9 @@ export default function Form({ notes, name, address, clientName, clientAddress, 
           </div>
           {/* GST No */}
           <div className="flex flex-col">
-            <label className="font-bold text-sm mx-1 mb-0.5" htmlFor="clientName">GST No</label>
+            <label className="font-bold text-sm mx-1 mb-0.5" htmlFor="clientGST">GST No</label>
             <input className="border border-gray-300 p-2 rounded h-10 mb-2 transition-all duration-100 
-             hover:border-blue-500 focus:border-blue-500 focus:ring-2 focus:ring-blue-300 outline-none md:w-auto" type="text" name="clientName" id="clientName" placeholder="ClientName" autoComplete="off" value={clientName} onChange={(e) => setClientName(e.target.value)} />
+             hover:border-blue-500 focus:border-blue-500 focus:ring-2 focus:ring-blue-300 outline-none md:w-auto" type="text" name="clientGST" id="clientGST" placeholder="clientGST" autoComplete="off" value={clientGST} onChange={(e) => setClientGST(e.target.value)} />
           </div>
           {/* clientAddress */}
           <div className="flex flex-col md:col-span-2">
