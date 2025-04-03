@@ -4,9 +4,12 @@ body {
     background-color: #f1f1f1;
 
 }
-input, textarea {
-    background-color : #f7f4f4;
+
+input,
+textarea {
+    background-color: #FBFBFB;
 }
+
 button {
     user-select: none;
 }
