@@ -1,6 +1,6 @@
 import TableForm from "./TableForm"
 
-export default function Form({ notes, name, address, clientName, clientAddress, invoiceDate, dueDate, invoiceNumber, phone, email, bankName, bankAccount, website, setName, setAddress, setBankAccount, setBankName, setClientAddress, setClientName, setDueDate, setEmail, setInvoiceDate, setInvoiceNumber, setNotes, setPhone, setWebsite, description, setDescription, amount, setAmount, price, setPrice, quantity, setQuantity, personalGST, setPersonalGST, clientGST, setClientGST, branchName, setBranchName, bankIFSC, setBankIFSC }) {
+export default function Form({ notes, name, address, clientName, clientAddress, invoiceDate, dueDate, invoiceNumber, phone, email, bankName, bankAccount, website, setName, setAddress, setBankAccount, setBankName, setClientAddress, setClientName, setDueDate, setEmail, setInvoiceDate, setInvoiceNumber, setNotes, setPhone, setWebsite, description, setDescription, amount, setAmount, price, setPrice, quantity, setQuantity, personalGST, setPersonalGST, clientGST, setClientGST, branchName, setBranchName, bankIFSC, setBankIFSC, totalQuantity, setTotalQuantity, totalPrice, setTotalPrice, totalAmount, setTotalAmount, list, setList }) {
   return (
     <>
       {/* Invoice Form */}
@@ -135,7 +135,6 @@ export default function Form({ notes, name, address, clientName, clientAddress, 
         <section className="flex flex-col justify-center item-center mb-8 md:flex-row md:flex-wrap md:justify-around">
           <label className="font-bold w-[100%] mb-2 text-left" htmlFor="name">Item Details</label>
           <div className="w-[100%]">
-
             <TableForm quantity={quantity}
               setQuantity={setQuantity}
               amount={amount}
@@ -143,7 +142,15 @@ export default function Form({ notes, name, address, clientName, clientAddress, 
               price={price}
               setPrice={setPrice}
               description={description}
-              setDescription={setDescription} />
+              setDescription={setDescription}
+              totalPrice={totalPrice}
+              setTotalPrice={setTotalPrice}
+              totalQuantity={totalQuantity}
+              setTotalQuantity={setTotalQuantity}
+              TotalAmount={totalAmount}
+              setTotalAmount={setTotalAmount}
+              list={list}
+              setList={setList} />
           </div>
         </section>
 

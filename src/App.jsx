@@ -25,13 +25,17 @@ function App() {
   const [dueDate, setDueDate] = useState("");
   const [notes, setNotes] = useState("");
   const [quantity, setQuantity] = useState("");
+  const [totalQuantity, setTotalQuantity] = useState("");
   const [amount, setAmount] = useState("");
+  const [totalAmount, setTotalAmount] = useState("");
+  const [totalPrice, setTotalPrice] = useState("");
   const [price, setPrice] = useState("");
   const [description, setDescription] = useState("");
   const [personalGST, setPersonalGST] = useState("");
   const [clientGST, setClientGST] = useState("");
   const [branchName, setBranchName] = useState("");
   const [bankIFSC, setBankIFSC] = useState("");
+  const [list,setList] = ([]);
 
   const handleOnPrint = () => {
     window.print();
@@ -58,7 +62,7 @@ function App() {
               <CientDetails clientName={clientName} clientAddress={clientAddress} clientGST={clientGST} />
             </section>
             <Dates invoiceDate={invoiceDate} dueDate={dueDate} invoiceNumber={invoiceNumber} />
-            <Table />
+            <Table description={description} price={price} quantity={quantity} amount={amount} totalPrice={price} totalQuantity={totalQuantity} TotalAmount={setTotalAmount} />
             <Notes notes={notes} />
             <Footer name={name} phone={phone} email={email} bankName={bankName} bankAccount={bankAccount} website={website} branchName={branchName} bankIFSC={bankIFSC} />
           </div>
@@ -97,6 +101,12 @@ function App() {
               setAmount={setAmount}
               price={price}
               setPrice={setPrice}
+              totalPrice={totalPrice}
+              setTotalPrice={setTotalPrice}
+              totalQuantity={totalQuantity}
+              setTotalQuantity={setTotalQuantity}
+              totalAmount={totalAmount}
+              setTotalAmount={setTotalAmount}
               description={description}
               setDescription={setDescription}
               personalGST={personalGST}
@@ -107,6 +117,8 @@ function App() {
               setBranchName={setBranchName}
               bankIFSC={bankIFSC}
               setBankIFSC={setBankIFSC}
+              list={list}
+              setList={setList}
             />
           </div>
         )}
