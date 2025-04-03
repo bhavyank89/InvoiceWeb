@@ -53,12 +53,14 @@ function App() {
           <div>
             {/* Invoice */}
             <Header handleOnPrint={handleOnPrint} handleOnDownload={handleOnDownload} handleOnSend={handleOnSend} />
-            <MainDetails name={name} address={address} />
-            <CientDetails clientName={clientName} clientAddress={clientAddress} clientGST={clientGST} />
+            <section className="flex flex-col sm:grid sm:grid-cols-2 mb-10">
+              <MainDetails name={name} address={address} personalGST={personalGST} />
+              <CientDetails clientName={clientName} clientAddress={clientAddress} clientGST={clientGST} />
+            </section>
             <Dates invoiceDate={invoiceDate} dueDate={dueDate} invoiceNumber={invoiceNumber} />
             <Table />
             <Notes notes={notes} />
-            <Footer name={name} address={address} phone={phone} email={email} bankName={bankName} bankAccount={bankAccount} website={website} personalGST={personalGST} branchName={branchName} bankIFSC={bankIFSC} />
+            <Footer name={name} phone={phone} email={email} bankName={bankName} bankAccount={bankAccount} website={website} branchName={branchName} bankIFSC={bankIFSC} />
           </div>
         ) : (
           <div>
