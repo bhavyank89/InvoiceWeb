@@ -1,21 +1,37 @@
+import { useState } from "react";
 import TableForm from "./TableForm"
+import Edit from "./Edit";
 
 export default function Form({ notes, name, address, clientName, clientAddress, invoiceDate, dueDate, invoiceNumber, phone, email, bankName, bankAccount, website, setName, setAddress, setBankAccount, setBankName, setClientAddress, setClientName, setDueDate, setEmail, setInvoiceDate, setInvoiceNumber, setNotes, setPhone, setWebsite, description, setDescription, amount, setAmount, price, setPrice, quantity, setQuantity, personalGST, setPersonalGST, clientGST, setClientGST, branchName, setBranchName, bankIFSC, setBankIFSC, totalQuantity, setTotalQuantity, totalPrice, setTotalPrice, totalAmount, setTotalAmount, list, setList, showAlertTab }) {
+
+  const [showEdit, setShowEdit] = useState(false);
+  const [editElement, setEditElement] = useState({});
 
   const handleOnDelete = (index) => {
     setList(list.filter((_, i) => i !== index));
     console.log("Delete Pressed", index);
     showAlertTab(true, "Item Deleted Successfully!!!");
-  }
-  // const handleOnEdit = (index) => {
-    
-  // }
+  };
+
+  const handleOnEdit = (index) => {
+    console.log(index);
+    const element = {
+      id: list[index].id,
+      description: list[index].description,
+      price: list[index].price,
+      amount: list[index].amount,
+      quantity: list[index].quantity,
+      index: index
+    };
+    setEditElement(element);
+    setShowEdit(true);
+  };
 
   return (
     <>
       {/* Invoice Form */}
       <div className="flex flex-col justify-center drop-shadow-md">
-
+        {showEdit && <Edit setShowEdit={setShowEdit} showAlertTab={showAlertTab} list={list} setList={setList} editElement={editElement} />}
         {/* Personal Information Section */}
         <section className="flex flex-col mb-8 justify-center item-center md:grid md:grid-cols-2 md:justify-around">
           <label className="font-bold w-[100%] mb-2 text-left col-span-2" htmlFor="name">Personal Information</label>
@@ -186,7 +202,7 @@ export default function Form({ notes, name, address, clientName, clientAddress, 
 
                   {/* Edit & Delete Buttons */}
                   <div className="col-span-2 flex justify-center gap-2 ml-2">
-                    <button className="bg-yellow-500 hover:bg-yellow-600 text-white px-3 py-1 rounded">Edit</button>
+                    <button className="bg-yellow-500 hover:bg-yellow-600 text-white px-3 py-1 rounded" onClick={() => handleOnEdit(index)}>Edit</button>
                     <button className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded" onClick={() => handleOnDelete(index)}>Delete</button>
                   </div>
                 </div>

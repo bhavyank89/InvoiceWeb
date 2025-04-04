@@ -46,10 +46,10 @@ function App() {
   const showAlertTab = (show, message) => {
     setAlertMessage(message);
     setShowAlert(show);
-    // setTimeout(() => {
-    //   setShowAlert(false);
-    //   setAlertMessage("");
-    // }, 2000);
+    setTimeout(() => {
+      setShowAlert(false);
+      setAlertMessage("");
+    }, 2000);
   }
 
   const handlePreviewInvoice = () => {
