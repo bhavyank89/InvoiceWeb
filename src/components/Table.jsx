@@ -4,7 +4,7 @@ export default function Table({ list }) {
         <>
             {/* Table */}
             <section className="overflow-x-auto">
-                <section className="grid grid-cols-1 w-[100%] min-w-xl overflow-x-auto">
+                <section className="grid grid-cols-1 w-[100%] min-w-xl overflow-x-auto md:min-w-auto">
                     {/* Heading row */}
                     <div className="grid grid-cols-6 col-span-1 w-[100%] bg-blue-100 mb-2">
                         <div className="col-span-3 w-[100%] font-bold text-center">Description</div>

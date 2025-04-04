@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import ClientDetails from "./components/ClientDetails";
 import Dates from "./components/Dates";
 import Footer from "./components/Footer";
@@ -68,7 +68,7 @@ function App() {
   return (
     <>
       {showAlert && <Alert alertMessage={alertMessage} />}
-      <main className="p-5 m-5 lg:max-w-xl lg:mx-auto bg-white rounded shadow flex flex-col">
+      <main className="p-5 m-5 lg:max-w-2xl lg:mx-auto bg-white rounded shadow flex flex-col">
         {showInvoice ? (
           <div>
             {/* Invoice */}

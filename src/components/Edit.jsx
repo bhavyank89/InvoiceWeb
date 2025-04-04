@@ -33,7 +33,7 @@ export default function Edit({ editElement, list, setList, showAlertTab, setShow
         setShowEdit(false);
     }
     return (
-        <section className="fixed top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] bg-white shadow-lg rounded-lg p-6 w-[90%] md:w-[50%] lg:w-[40%] z-50">
+        <section className="fixed top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] bg-white shadow-lg rounded-lg p-6 w-[100%] md:w-[100%] lg:w-[100%] z-50">
             <form onSubmit={handleOnSubmit}>
                 <section className="grid grid-cols-1 md:grid-cols-3 gap-4">
                     {/* Description Input */}
