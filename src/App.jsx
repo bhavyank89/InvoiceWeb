@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import ClientDetails from "./components/ClientDetails";
 import Dates from "./components/Dates";
 import Footer from "./components/Footer";
@@ -8,6 +8,8 @@ import Notes from "./components/Notes";
 import Table from "./components/Table";
 import InvoiceForm from "./components/InvoiceForm";
 import Alert from './components/Alert';
+import { useReactToPrint } from "react-to-print";
+import generatePDF, { Resolution, Margin } from 'react-to-pdf';
 
 function App() {
   const [showInvoice, setShowInvoice] = useState(true);
@@ -40,8 +42,14 @@ function App() {
   const [showAlert, setShowAlert] = useState(false);
   const [alertMessage, setAlertMessage] = useState("");
 
+  const contentRef = useRef();
+  const reactToPrintFn = useReactToPrint({ contentRef });
+
   const handleOnPrint = () => {
-    window.print();
+    // window.print();
+    console.log(contentRef)
+    reactToPrintFn();
+    console.log(contentRef.current)
   };
   const showAlertTab = (show, message) => {
     setAlertMessage(message);
@@ -57,13 +65,9 @@ function App() {
     setTogglePreview(showInvoice ? "Preview Invoice" : "Edit Invoice");
   };
 
-  const handleOnDownload = () => {
-    // Add download functionality if needed
-  };
+  const handleOnDownload =  ()=>{
 
-  const handleOnSend = () => {
-    // Add email sending functionality if needed
-  };
+  }
 
   return (
     <>
@@ -75,34 +79,36 @@ function App() {
             <Header
               handleOnPrint={handleOnPrint}
               handleOnDownload={handleOnDownload}
-              handleOnSend={handleOnSend}
+              reactToPrintFn={reactToPrintFn}
             />
-            <section className="flex flex-col sm:grid sm:grid-cols-2 mb-10">
-              <MainDetails name={name} address={address} personalGST={personalGST} />
-              <ClientDetails clientName={clientName} clientAddress={clientAddress} clientGST={clientGST} />
+            <section className="printComponent" ref={contentRef}>
+              <section className="flex flex-col sm:grid sm:grid-cols-2 mb-10">
+                <MainDetails name={name} address={address} personalGST={personalGST} />
+                <ClientDetails clientName={clientName} clientAddress={clientAddress} clientGST={clientGST} />
+              </section>
+              <Dates invoiceDate={invoiceDate} dueDate={dueDate} invoiceNumber={invoiceNumber} />
+              <Table
+                description={description}
+                price={price}
+                quantity={quantity}
+                amount={amount}
+                totalPrice={totalPrice}
+                totalQuantity={totalQuantity}
+                totalAmount={totalAmount}
+                list={list}
+              />
+              <Notes notes={notes} />
+              <Footer
+                name={name}
+                phone={phone}
+                email={email}
+                bankName={bankName}
+                bankAccount={bankAccount}
+                website={website}
+                branchName={branchName}
+                bankIFSC={bankIFSC}
+              />
             </section>
-            <Dates invoiceDate={invoiceDate} dueDate={dueDate} invoiceNumber={invoiceNumber} />
-            <Table
-              description={description}
-              price={price}
-              quantity={quantity}
-              amount={amount}
-              totalPrice={totalPrice}
-              totalQuantity={totalQuantity}
-              totalAmount={totalAmount}
-              list={list}
-            />
-            <Notes notes={notes} />
-            <Footer
-              name={name}
-              phone={phone}
-              email={email}
-              bankName={bankName}
-              bankAccount={bankAccount}
-              website={website}
-              branchName={branchName}
-              bankIFSC={bankIFSC}
-            />
           </div>
         ) : (
           <div>
