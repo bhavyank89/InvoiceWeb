@@ -9,11 +9,15 @@ import Table from "./components/Table";
 import InvoiceForm from "./components/InvoiceForm";
 import Alert from './components/Alert';
 import { useReactToPrint } from "react-to-print";
+
+// Assuming you're using react-to-pdf fork that exports generatePDF
 import generatePDF, { Resolution, Margin } from 'react-to-pdf';
 
 function App() {
   const [showInvoice, setShowInvoice] = useState(true);
   const [togglePreview, setTogglePreview] = useState("Preview Invoice");
+
+  // Form state
   const [name, setName] = useState("");
   const [address, setAddress] = useState("");
   const [phone, setPhone] = useState("");
@@ -42,15 +46,19 @@ function App() {
   const [showAlert, setShowAlert] = useState(false);
   const [alertMessage, setAlertMessage] = useState("");
 
+  // Refs
   const contentRef = useRef();
-  const reactToPrintFn = useReactToPrint({ contentRef });
+
+  // Fix: pass correct content function
+  const reactToPrintFn = useReactToPrint({
+    content: () => contentRef.current,
+    documentTitle: "InvoiceWeb",
+  });
 
   const handleOnPrint = () => {
-    // window.print();
-    console.log(contentRef)
     reactToPrintFn();
-    console.log(contentRef.current)
   };
+
   const showAlertTab = (show, message) => {
     setAlertMessage(message);
     setShowAlert(show);
@@ -58,16 +66,27 @@ function App() {
       setShowAlert(false);
       setAlertMessage("");
     }, 2000);
-  }
+  };
 
   const handlePreviewInvoice = () => {
     setShowInvoice((prev) => !prev);
     setTogglePreview(showInvoice ? "Preview Invoice" : "Edit Invoice");
   };
 
-  const handleOnDownload =  ()=>{
+  const getTargetElement = () => document.getElementById('printComponent');
 
-  }
+  const options = {
+    method: 'open',
+    resolution: Resolution.MEDIUM,
+    page: {
+      margin: Margin.MEDIUM,
+      format: 'A4',
+    }
+  };
+
+  const handleOnDownload = () => {
+    generatePDF(getTargetElement(), options);
+  };
 
   return (
     <>
@@ -75,13 +94,11 @@ function App() {
       <main className="p-5 m-5 lg:max-w-2xl lg:mx-auto bg-white rounded shadow flex flex-col">
         {showInvoice ? (
           <div>
-            {/* Invoice */}
             <Header
               handleOnPrint={handleOnPrint}
               handleOnDownload={handleOnDownload}
-              reactToPrintFn={reactToPrintFn}
             />
-            <section className="printComponent" ref={contentRef}>
+            <section className="printComponent" id="printComponent" ref={contentRef}>
               <section className="flex flex-col sm:grid sm:grid-cols-2 mb-10">
                 <MainDetails name={name} address={address} personalGST={personalGST} />
                 <ClientDetails clientName={clientName} clientAddress={clientAddress} clientGST={clientGST} />
@@ -111,61 +128,59 @@ function App() {
             </section>
           </div>
         ) : (
-          <div>
-            <InvoiceForm
-              notes={notes}
-              name={name}
-              address={address}
-              clientName={clientName}
-              clientAddress={clientAddress}
-              invoiceDate={invoiceDate}
-              dueDate={dueDate}
-              invoiceNumber={invoiceNumber}
-              phone={phone}
-              email={email}
-              bankName={bankName}
-              bankAccount={bankAccount}
-              website={website}
-              setName={setName}
-              setAddress={setAddress}
-              setBankAccount={setBankAccount}
-              setBankName={setBankName}
-              setClientAddress={setClientAddress}
-              setClientName={setClientName}
-              setDueDate={setDueDate}
-              setEmail={setEmail}
-              setInvoiceDate={setInvoiceDate}
-              setInvoiceNumber={setInvoiceNumber}
-              setNotes={setNotes}
-              setPhone={setPhone}
-              setWebsite={setWebsite}
-              quantity={quantity}
-              setQuantity={setQuantity}
-              amount={amount}
-              setAmount={setAmount}
-              price={price}
-              setPrice={setPrice}
-              totalPrice={totalPrice}
-              setTotalPrice={setTotalPrice}
-              totalQuantity={totalQuantity}
-              setTotalQuantity={setTotalQuantity}
-              totalAmount={totalAmount}
-              setTotalAmount={setTotalAmount}
-              description={description}
-              setDescription={setDescription}
-              personalGST={personalGST}
-              setPersonalGST={setPersonalGST}
-              clientGST={clientGST}
-              setClientGST={setClientGST}
-              branchName={branchName}
-              setBranchName={setBranchName}
-              bankIFSC={bankIFSC}
-              setBankIFSC={setBankIFSC}
-              list={list}
-              setList={setList}
-              showAlertTab={showAlertTab}
-            />
-          </div>
+          <InvoiceForm
+            notes={notes}
+            name={name}
+            address={address}
+            clientName={clientName}
+            clientAddress={clientAddress}
+            invoiceDate={invoiceDate}
+            dueDate={dueDate}
+            invoiceNumber={invoiceNumber}
+            phone={phone}
+            email={email}
+            bankName={bankName}
+            bankAccount={bankAccount}
+            website={website}
+            setName={setName}
+            setAddress={setAddress}
+            setBankAccount={setBankAccount}
+            setBankName={setBankName}
+            setClientAddress={setClientAddress}
+            setClientName={setClientName}
+            setDueDate={setDueDate}
+            setEmail={setEmail}
+            setInvoiceDate={setInvoiceDate}
+            setInvoiceNumber={setInvoiceNumber}
+            setNotes={setNotes}
+            setPhone={setPhone}
+            setWebsite={setWebsite}
+            quantity={quantity}
+            setQuantity={setQuantity}
+            amount={amount}
+            setAmount={setAmount}
+            price={price}
+            setPrice={setPrice}
+            totalPrice={totalPrice}
+            setTotalPrice={setTotalPrice}
+            totalQuantity={totalQuantity}
+            setTotalQuantity={setTotalQuantity}
+            totalAmount={totalAmount}
+            setTotalAmount={setTotalAmount}
+            description={description}
+            setDescription={setDescription}
+            personalGST={personalGST}
+            setPersonalGST={setPersonalGST}
+            clientGST={clientGST}
+            setClientGST={setClientGST}
+            branchName={branchName}
+            setBranchName={setBranchName}
+            bankIFSC={bankIFSC}
+            setBankIFSC={setBankIFSC}
+            list={list}
+            setList={setList}
+            showAlertTab={showAlertTab}
+          />
         )}
         <button
           className="font-bold text-white py-2 px-8 mt-2 rounded shadow bg-blue-500 border-blue-500 border-2 hover:bg-transparent hover:text-blue-500 transition-all duration-300"
