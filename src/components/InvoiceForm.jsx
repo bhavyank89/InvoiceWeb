@@ -2,6 +2,13 @@ import TableForm from "./TableForm"
 
 export default function Form({ notes, name, address, clientName, clientAddress, invoiceDate, dueDate, invoiceNumber, phone, email, bankName, bankAccount, website, setName, setAddress, setBankAccount, setBankName, setClientAddress, setClientName, setDueDate, setEmail, setInvoiceDate, setInvoiceNumber, setNotes, setPhone, setWebsite, description, setDescription, amount, setAmount, price, setPrice, quantity, setQuantity, personalGST, setPersonalGST, clientGST, setClientGST, branchName, setBranchName, bankIFSC, setBankIFSC, totalQuantity, setTotalQuantity, totalPrice, setTotalPrice, totalAmount, setTotalAmount, list, setList }) {
 
+  const handleOnDelete = (index) => {
+
+  }
+  const handleOnEdit = (index) => {
+
+  }
+
   return (
     <>
       {/* Invoice Form */}
@@ -154,7 +161,7 @@ export default function Form({ notes, name, address, clientName, clientAddress, 
               setList={setList} />
           </div>
           {/* Displaying List of Items */}
-          <section className="overflow-x-auto">
+          {list.length > 0 && (<section className="overflow-x-auto">
 
             <section className="p-2 mt-5 w-[100%] overflow-x-auto min-w-xl">
               {list.length > 0 && (
@@ -176,13 +183,13 @@ export default function Form({ notes, name, address, clientName, clientAddress, 
 
                   {/* Edit & Delete Buttons */}
                   <div className="col-span-2 flex justify-center gap-2 ml-2">
-                    <button className="bg-yellow-500 hover:bg-yellow-600 text-white px-3 py-1 rounded">Edit</button>
-                    <button className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded">Delete</button>
+                    <button className="bg-yellow-500 hover:bg-yellow-600 text-white px-3 py-1 rounded" onClick={handleOnEdit(index)}>Edit</button>
+                    <button className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded" onClick={handleOnDelete(index)}>Delete</button>
                   </div>
                 </div>
               ))}
             </section>
-          </section>
+          </section>)}
         </section>
 
         {/* Additional Notes Section */}
