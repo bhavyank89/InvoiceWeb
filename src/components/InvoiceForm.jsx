@@ -1,6 +1,7 @@
 import TableForm from "./TableForm"
 
 export default function Form({ notes, name, address, clientName, clientAddress, invoiceDate, dueDate, invoiceNumber, phone, email, bankName, bankAccount, website, setName, setAddress, setBankAccount, setBankName, setClientAddress, setClientName, setDueDate, setEmail, setInvoiceDate, setInvoiceNumber, setNotes, setPhone, setWebsite, description, setDescription, amount, setAmount, price, setPrice, quantity, setQuantity, personalGST, setPersonalGST, clientGST, setClientGST, branchName, setBranchName, bankIFSC, setBankIFSC, totalQuantity, setTotalQuantity, totalPrice, setTotalPrice, totalAmount, setTotalAmount, list, setList }) {
+
   return (
     <>
       {/* Invoice Form */}
@@ -152,6 +153,36 @@ export default function Form({ notes, name, address, clientName, clientAddress, 
               list={list}
               setList={setList} />
           </div>
+          {/* Displaying List of Items */}
+          <section className="overflow-x-auto">
+
+            <section className="p-2 mt-5 w-[100%] overflow-x-auto min-w-xl">
+              {list.length > 0 && (
+                <div className="grid grid-cols-8 w-[100%] bg-blue-100 mb-2 p-2">
+                  <div className="col-span-3 font-bold text-center">Description</div>
+                  <div className="col-span-1 text-end font-bold">Price</div>
+                  <div className="col-span-1 text-end font-bold">Quantity</div>
+                  <div className="col-span-1 text-end font-bold">Amount</div>
+                  <div className="col-span-2 text-center font-bold">Actions</div>
+                </div>
+              )}
+
+              {list.map((element, index) => (
+                <div key={index} className="grid grid-cols-8 items-center w-[100%] p-2 border-b">
+                  <div className="col-span-3 pl-2">{element.description}</div>
+                  <div className="col-span-1 text-end">{element.price}</div>
+                  <div className="col-span-1 text-end">{element.quantity}</div>
+                  <div className="col-span-1 text-end ml-2">{element.amount}</div>
+
+                  {/* Edit & Delete Buttons */}
+                  <div className="col-span-2 flex justify-center gap-2 ml-2">
+                    <button className="bg-yellow-500 hover:bg-yellow-600 text-white px-3 py-1 rounded">Edit</button>
+                    <button className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded">Delete</button>
+                  </div>
+                </div>
+              ))}
+            </section>
+          </section>
         </section>
 
         {/* Additional Notes Section */}
@@ -163,7 +194,7 @@ export default function Form({ notes, name, address, clientName, clientAddress, 
              hover:border-blue-500 focus:border-blue-500 focus:ring-2 focus:ring-blue-300 outline-none" type="text" name="notes" id="notes" placeholder="Enter your notes" autoComplete="off" value={notes} onChange={(e) => setNotes(e.target.value)} />
           </div>
         </section>
-      </div>
+      </div >
     </>
   )
 }

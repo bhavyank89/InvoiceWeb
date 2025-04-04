@@ -1,5 +1,5 @@
 import { useState } from "react";
-import CientDetails from "./components/ClientDetails";
+import ClientDetails from "./components/ClientDetails";
 import Dates from "./components/Dates";
 import Footer from "./components/Footer";
 import Header from "./components/Header";
@@ -35,7 +35,7 @@ function App() {
   const [clientGST, setClientGST] = useState("");
   const [branchName, setBranchName] = useState("");
   const [bankIFSC, setBankIFSC] = useState("");
-  const [list,setList] = ([]);
+  const [list, setList] = useState([]);
 
   const handleOnPrint = () => {
     window.print();
@@ -46,9 +46,13 @@ function App() {
     setTogglePreview(showInvoice ? "Preview Invoice" : "Edit Invoice");
   };
 
-  const handleOnDownload = () => { };
+  const handleOnDownload = () => {
+    // Add download functionality if needed
+  };
 
-  const handleOnSend = () => { };
+  const handleOnSend = () => {
+    // Add email sending functionality if needed
+  };
 
   return (
     <>
@@ -56,15 +60,37 @@ function App() {
         {showInvoice ? (
           <div>
             {/* Invoice */}
-            <Header handleOnPrint={handleOnPrint} handleOnDownload={handleOnDownload} handleOnSend={handleOnSend} />
+            <Header
+              handleOnPrint={handleOnPrint}
+              handleOnDownload={handleOnDownload}
+              handleOnSend={handleOnSend}
+            />
             <section className="flex flex-col sm:grid sm:grid-cols-2 mb-10">
               <MainDetails name={name} address={address} personalGST={personalGST} />
-              <CientDetails clientName={clientName} clientAddress={clientAddress} clientGST={clientGST} />
+              <ClientDetails clientName={clientName} clientAddress={clientAddress} clientGST={clientGST} />
             </section>
             <Dates invoiceDate={invoiceDate} dueDate={dueDate} invoiceNumber={invoiceNumber} />
-            <Table description={description} price={price} quantity={quantity} amount={amount} totalPrice={price} totalQuantity={totalQuantity} TotalAmount={setTotalAmount} />
+            <Table
+              description={description}
+              price={price}
+              quantity={quantity}
+              amount={amount}
+              totalPrice={totalPrice}
+              totalQuantity={totalQuantity}
+              totalAmount={totalAmount}
+              list={list}
+            />
             <Notes notes={notes} />
-            <Footer name={name} phone={phone} email={email} bankName={bankName} bankAccount={bankAccount} website={website} branchName={branchName} bankIFSC={bankIFSC} />
+            <Footer
+              name={name}
+              phone={phone}
+              email={email}
+              bankName={bankName}
+              bankAccount={bankAccount}
+              website={website}
+              branchName={branchName}
+              bankIFSC={bankIFSC}
+            />
           </div>
         ) : (
           <div>
