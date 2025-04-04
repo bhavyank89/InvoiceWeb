@@ -50,10 +50,7 @@ function App() {
   const contentRef = useRef();
 
   // Fix: pass correct content function
-  const reactToPrintFn = useReactToPrint({
-    content: () => contentRef.current,
-    documentTitle: "InvoiceWeb",
-  });
+  const reactToPrintFn = useReactToPrint({ contentRef });
 
   const handleOnPrint = () => {
     reactToPrintFn();
@@ -73,21 +70,6 @@ function App() {
     setTogglePreview(showInvoice ? "Preview Invoice" : "Edit Invoice");
   };
 
-  const getTargetElement = () => document.getElementById('printComponent');
-
-  const options = {
-    method: 'open',
-    resolution: Resolution.MEDIUM,
-    page: {
-      margin: Margin.MEDIUM,
-      format: 'A4',
-    }
-  };
-
-  const handleOnDownload = () => {
-    generatePDF(getTargetElement(), options);
-  };
-
   return (
     <>
       {showAlert && <Alert alertMessage={alertMessage} />}
@@ -96,9 +78,8 @@ function App() {
           <div>
             <Header
               handleOnPrint={handleOnPrint}
-              handleOnDownload={handleOnDownload}
             />
-            <section className="printComponent" id="printComponent" ref={contentRef}>
+            <section className="printComponent" ref={contentRef}>
               <section className="flex flex-col sm:grid sm:grid-cols-2 mb-10">
                 <MainDetails name={name} address={address} personalGST={personalGST} />
                 <ClientDetails clientName={clientName} clientAddress={clientAddress} clientGST={clientGST} />
