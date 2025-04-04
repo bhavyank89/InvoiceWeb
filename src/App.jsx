@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ClientDetails from "./components/ClientDetails";
 import Dates from "./components/Dates";
 import Footer from "./components/Footer";
@@ -7,6 +7,7 @@ import MainDetails from "./components/MainDetails";
 import Notes from "./components/Notes";
 import Table from "./components/Table";
 import InvoiceForm from "./components/InvoiceForm";
+import Alert from './components/Alert';
 
 function App() {
   const [showInvoice, setShowInvoice] = useState(true);
@@ -36,10 +37,20 @@ function App() {
   const [branchName, setBranchName] = useState("");
   const [bankIFSC, setBankIFSC] = useState("");
   const [list, setList] = useState([]);
+  const [showAlert, setShowAlert] = useState(false);
+  const [alertMessage, setAlertMessage] = useState("");
 
   const handleOnPrint = () => {
     window.print();
   };
+  const showAlertTab = (show, message) => {
+    setAlertMessage(message);
+    setShowAlert(show);
+    // setTimeout(() => {
+    //   setShowAlert(false);
+    //   setAlertMessage("");
+    // }, 2000);
+  }
 
   const handlePreviewInvoice = () => {
     setShowInvoice((prev) => !prev);
@@ -56,6 +67,7 @@ function App() {
 
   return (
     <>
+      {showAlert && <Alert alertMessage={alertMessage} />}
       <main className="p-5 m-5 lg:max-w-xl lg:mx-auto bg-white rounded shadow flex flex-col">
         {showInvoice ? (
           <div>
@@ -145,6 +157,7 @@ function App() {
               setBankIFSC={setBankIFSC}
               list={list}
               setList={setList}
+              showAlertTab={showAlertTab}
             />
           </div>
         )}

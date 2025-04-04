@@ -1,13 +1,15 @@
 import TableForm from "./TableForm"
 
-export default function Form({ notes, name, address, clientName, clientAddress, invoiceDate, dueDate, invoiceNumber, phone, email, bankName, bankAccount, website, setName, setAddress, setBankAccount, setBankName, setClientAddress, setClientName, setDueDate, setEmail, setInvoiceDate, setInvoiceNumber, setNotes, setPhone, setWebsite, description, setDescription, amount, setAmount, price, setPrice, quantity, setQuantity, personalGST, setPersonalGST, clientGST, setClientGST, branchName, setBranchName, bankIFSC, setBankIFSC, totalQuantity, setTotalQuantity, totalPrice, setTotalPrice, totalAmount, setTotalAmount, list, setList }) {
+export default function Form({ notes, name, address, clientName, clientAddress, invoiceDate, dueDate, invoiceNumber, phone, email, bankName, bankAccount, website, setName, setAddress, setBankAccount, setBankName, setClientAddress, setClientName, setDueDate, setEmail, setInvoiceDate, setInvoiceNumber, setNotes, setPhone, setWebsite, description, setDescription, amount, setAmount, price, setPrice, quantity, setQuantity, personalGST, setPersonalGST, clientGST, setClientGST, branchName, setBranchName, bankIFSC, setBankIFSC, totalQuantity, setTotalQuantity, totalPrice, setTotalPrice, totalAmount, setTotalAmount, list, setList, showAlertTab }) {
 
   const handleOnDelete = (index) => {
-
+    setList(list.filter((_, i) => i !== index));
+    console.log("Delete Pressed", index);
+    showAlertTab(true, "Item Deleted Successfully!!!");
   }
-  const handleOnEdit = (index) => {
-
-  }
+  // const handleOnEdit = (index) => {
+    
+  // }
 
   return (
     <>
@@ -158,7 +160,8 @@ export default function Form({ notes, name, address, clientName, clientAddress, 
               TotalAmount={totalAmount}
               setTotalAmount={setTotalAmount}
               list={list}
-              setList={setList} />
+              setList={setList}
+              showAlertTab={showAlertTab} />
           </div>
           {/* Displaying List of Items */}
           {list.length > 0 && (<section className="overflow-x-auto">
@@ -183,8 +186,8 @@ export default function Form({ notes, name, address, clientName, clientAddress, 
 
                   {/* Edit & Delete Buttons */}
                   <div className="col-span-2 flex justify-center gap-2 ml-2">
-                    <button className="bg-yellow-500 hover:bg-yellow-600 text-white px-3 py-1 rounded" onClick={handleOnEdit(index)}>Edit</button>
-                    <button className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded" onClick={handleOnDelete(index)}>Delete</button>
+                    <button className="bg-yellow-500 hover:bg-yellow-600 text-white px-3 py-1 rounded">Edit</button>
+                    <button className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded" onClick={() => handleOnDelete(index)}>Delete</button>
                   </div>
                 </div>
               ))}
@@ -194,7 +197,7 @@ export default function Form({ notes, name, address, clientName, clientAddress, 
 
         {/* Additional Notes Section */}
         <section>
-          <label className="font-bold w-[100%] mb-2 text-left" htmlFor="name">Additional Notes</label>
+          <label className="font-bold w-[100%] mb-2 text-left mt-5" htmlFor="name">Additional Notes</label>
           {/* notes */}
           <div className="flex flex-col mt-3">
             <textarea className="border border-gray-300 p-2 rounded h-15 mb-2 transition-all duration-100 
