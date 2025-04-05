@@ -10,8 +10,6 @@ import InvoiceForm from "./components/InvoiceForm";
 import Alert from './components/Alert';
 import { useReactToPrint } from "react-to-print";
 
-// Assuming you're using react-to-pdf fork that exports generatePDF
-import generatePDF, { Resolution, Margin } from 'react-to-pdf';
 
 function App() {
   const [showInvoice, setShowInvoice] = useState(true);
