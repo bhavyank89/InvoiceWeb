@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import ClientDetails from "./components/ClientDetails";
 import Dates from "./components/Dates";
 import Footer from "./components/Footer";
@@ -9,8 +9,6 @@ import Table from "./components/Table";
 import InvoiceForm from "./components/InvoiceForm";
 import Alert from './components/Alert';
 import { useReactToPrint } from "react-to-print";
-
-// Assuming you're using react-to-pdf fork that exports generatePDF
 import generatePDF, { Resolution, Margin } from 'react-to-pdf';
 
 function App() {
@@ -49,12 +47,26 @@ function App() {
   // Refs
   const contentRef = useRef();
 
-  // Fix: pass correct content function
+  // react-to-print
   const reactToPrintFn = useReactToPrint({ contentRef });
-
   const handleOnPrint = () => {
     reactToPrintFn();
   };
+
+  // Intercept Ctrl/⌘+P and route to internal print when invoice preview is visible
+  useEffect(() => {
+    const onKeyDown = (e) => {
+      const isCtrlP = (e.ctrlKey || e.metaKey) && String(e.key).toLowerCase() === "p";
+      if (isCtrlP) {
+        e.preventDefault();
+        if (showInvoice) {
+          handleOnPrint();
+        }
+      }
+    };
+    document.addEventListener("keydown", onKeyDown, true);
+    return () => document.removeEventListener("keydown", onKeyDown, true);
+  }, [showInvoice, handleOnPrint]);
 
   const showAlertTab = (show, message) => {
     setAlertMessage(message);
@@ -76,14 +88,13 @@ function App() {
       <main className="p-5 m-5 lg:max-w-2xl lg:mx-auto bg-white rounded shadow flex flex-col">
         {showInvoice ? (
           <div>
-            <Header
-              handleOnPrint={handleOnPrint}
-            />
+            <Header handleOnPrint={handleOnPrint} />
             <section className="printComponent" ref={contentRef}>
               <section className="flex flex-col sm:grid sm:grid-cols-2 mb-10">
                 <MainDetails name={name} address={address} personalGST={personalGST} />
                 <ClientDetails clientName={clientName} clientAddress={clientAddress} clientGST={clientGST} />
               </section>
+
               <Dates invoiceDate={invoiceDate} dueDate={dueDate} invoiceNumber={invoiceNumber} />
               <Table
                 description={description}
@@ -163,6 +174,7 @@ function App() {
             showAlertTab={showAlertTab}
           />
         )}
+
         <button
           className="font-bold text-white py-2 px-8 mt-2 rounded shadow bg-blue-500 border-blue-500 border-2 hover:bg-transparent hover:text-blue-500 transition-all duration-300"
           onClick={handlePreviewInvoice}
