@@ -9,7 +9,6 @@ import Table from "./components/Table";
 import InvoiceForm from "./components/InvoiceForm";
 import Alert from './components/Alert';
 import { useReactToPrint } from "react-to-print";
-import generatePDF, { Resolution, Margin } from 'react-to-pdf';
 
 function App() {
   const [showInvoice, setShowInvoice] = useState(true);
@@ -30,11 +29,8 @@ function App() {
   const [dueDate, setDueDate] = useState("");
   const [notes, setNotes] = useState("");
   const [quantity, setQuantity] = useState("");
-  const [totalQuantity, setTotalQuantity] = useState("");
-  const [amount, setAmount] = useState("");
-  const [totalAmount, setTotalAmount] = useState("");
-  const [totalPrice, setTotalPrice] = useState("");
   const [price, setPrice] = useState("");
+  const [amount, setAmount] = useState("");
   const [description, setDescription] = useState("");
   const [personalGST, setPersonalGST] = useState("");
   const [clientGST, setClientGST] = useState("");
@@ -44,29 +40,44 @@ function App() {
   const [showAlert, setShowAlert] = useState(false);
   const [alertMessage, setAlertMessage] = useState("");
 
-  // Refs
+  // GST & totals
+  const [gstRate, setGstRate] = useState(18);
+  const [subtotal, setSubtotal] = useState(0);
+  const [taxAmount, setTaxAmount] = useState(0);
+  const [grandTotal, setGrandTotal] = useState(0);
+
+  // Currency
+  const [currency, setCurrency] = useState("INR");
+
+  // refs
   const contentRef = useRef();
 
   // react-to-print
   const reactToPrintFn = useReactToPrint({ contentRef });
-  const handleOnPrint = () => {
-    reactToPrintFn();
-  };
+  const handleOnPrint = () => reactToPrintFn();
 
-  // Intercept Ctrl/⌘+P and route to internal print when invoice preview is visible
+  // intercept Ctrl+P
   useEffect(() => {
     const onKeyDown = (e) => {
       const isCtrlP = (e.ctrlKey || e.metaKey) && String(e.key).toLowerCase() === "p";
       if (isCtrlP) {
         e.preventDefault();
-        if (showInvoice) {
-          handleOnPrint();
-        }
+        if (showInvoice) handleOnPrint();
       }
     };
     document.addEventListener("keydown", onKeyDown, true);
     return () => document.removeEventListener("keydown", onKeyDown, true);
   }, [showInvoice, handleOnPrint]);
+
+  // auto-calc totals
+  useEffect(() => {
+    const sub = list.reduce((sum, item) => sum + item.amount, 0);
+    const tax = (sub * gstRate) / 100;
+    const total = sub + tax;
+    setSubtotal(sub);
+    setTaxAmount(tax);
+    setGrandTotal(total);
+  }, [list, gstRate]);
 
   const showAlertTab = (show, message) => {
     setAlertMessage(message);
@@ -97,14 +108,12 @@ function App() {
 
               <Dates invoiceDate={invoiceDate} dueDate={dueDate} invoiceNumber={invoiceNumber} />
               <Table
-                description={description}
-                price={price}
-                quantity={quantity}
-                amount={amount}
-                totalPrice={totalPrice}
-                totalQuantity={totalQuantity}
-                totalAmount={totalAmount}
                 list={list}
+                subtotal={subtotal}
+                gstRate={gstRate}
+                taxAmount={taxAmount}
+                grandTotal={grandTotal}
+                currency={currency}
               />
               <Notes notes={notes} />
               <Footer
@@ -153,12 +162,6 @@ function App() {
             setAmount={setAmount}
             price={price}
             setPrice={setPrice}
-            totalPrice={totalPrice}
-            setTotalPrice={setTotalPrice}
-            totalQuantity={totalQuantity}
-            setTotalQuantity={setTotalQuantity}
-            totalAmount={totalAmount}
-            setTotalAmount={setTotalAmount}
             description={description}
             setDescription={setDescription}
             personalGST={personalGST}
@@ -172,6 +175,10 @@ function App() {
             list={list}
             setList={setList}
             showAlertTab={showAlertTab}
+            gstRate={gstRate}
+            setGstRate={setGstRate}
+            currency={currency}
+            setCurrency={setCurrency}
           />
         )}
 
